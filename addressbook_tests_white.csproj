@@ -62,9 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationManager\ApplicationManager.cs" />
+    <Compile Include="ApplicationManager\EntryHelper.cs" />
     <Compile Include="ApplicationManager\GroupHelper.cs" />
     <Compile Include="ApplicationManager\HelperBase.cs" />
+    <Compile Include="ApplicationManager\NavigationHelper.cs" />
+    <Compile Include="Model\EntryData.cs" />
     <Compile Include="Model\GroupData.cs" />
+    <Compile Include="Tests\EntryCreationTests.cs" />
+    <Compile Include="Tests\EntryRemovalTests.cs" />
     <Compile Include="Tests\GroupCreationTests.cs" />
     <Compile Include="Tests\GroupRemovalTests.cs" />
     <Compile Include="Tests\TestBase.cs" />

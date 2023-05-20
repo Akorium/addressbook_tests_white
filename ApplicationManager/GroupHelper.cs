@@ -17,20 +17,13 @@ namespace addressbook_tests_white
 
         public void Add(GroupData newGroup)
         {
-            Window groupsWindow = OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
+            Window groupsWindow = manager.NavigationHelper.OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
             manager.MainWindow.Get<Button>("uxNewAddressButton").Click();
             TextBox textBox = (TextBox) groupsWindow.Get(SearchCriteria.ByControlType(ControlType.Edit));
             textBox.Enter(newGroup.Name);
             Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
             CloseGroupsDialogue(groupsWindow);
         }
-
-        private Window OpenWindow(Window currentWindow, string buttonId, string nextWindowTitle)
-        {
-            currentWindow.Get<Button>(buttonId).Click();
-            return currentWindow.ModalWindow(nextWindowTitle);
-        }
-
         private void CloseGroupsDialogue(Window window)
         {
             window.Get<Button>("uxCloseAddressButton").Click();
@@ -39,7 +32,7 @@ namespace addressbook_tests_white
         public List<GroupData> GetGroupList()
         {
             List<GroupData> groups = new List<GroupData>();
-            Window groupsWindow = OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
+            Window groupsWindow = manager.NavigationHelper.OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
             TreeNode root = GetRoot(groupsWindow);
             foreach (TreeNode item in root.Nodes)
             {
@@ -54,7 +47,7 @@ namespace addressbook_tests_white
 
         public void Remove(int groupToRemove)
         {
-            Window groupsWindow = OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
+            Window groupsWindow = manager.NavigationHelper.OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
             TreeNode root = GetRoot(groupsWindow);
             root.Nodes[groupToRemove].Click();
             ConfirmGroupRemoval(groupsWindow);
@@ -63,7 +56,7 @@ namespace addressbook_tests_white
 
         private void ConfirmGroupRemoval(Window groupsWindow)
         {
-            Window deleteGroupWindow = OpenWindow(groupsWindow, "uxDeleteAddressButton", DELETE_GROUP_WIN_TITLE);
+            Window deleteGroupWindow = manager.NavigationHelper.OpenWindow(groupsWindow, "uxDeleteAddressButton", DELETE_GROUP_WIN_TITLE);
             deleteGroupWindow.Get<RadioButton>("uxDeleteAllRadioButton").Click();
             deleteGroupWindow.Get<Button>("uxOKAddressButton").Click();
         }
@@ -71,7 +64,7 @@ namespace addressbook_tests_white
         public List<GroupData> CheckGroups(int groupToRemove)
         {
             List<GroupData> groups = GetGroupList();
-            Window groupsWindow = OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
+            Window groupsWindow = manager.NavigationHelper.OpenWindow(manager.MainWindow, "groupButton", GROUP_WIN_TITLE);
             TreeNode root = GetRoot(groupsWindow);
             int groupsToAdd = ++groupToRemove - root.Nodes.Count;
             CloseGroupsDialogue(groupsWindow);
